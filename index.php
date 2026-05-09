@@ -225,6 +225,7 @@ $total_views = (int) $conn->query("SELECT COALESCE(SUM(views), 0) AS total_views
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script src="script.js"></script>
 </body>
