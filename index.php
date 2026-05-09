@@ -173,7 +173,9 @@ $total_views = (int) $conn->query("SELECT COALESCE(SUM(views), 0) AS total_views
                                             onclick="incrementViews(<?php echo $row['id']; ?>, this)">
                                         <i class="fas fa-eye"></i> <?php echo $row['views']; ?>
                                     </button>
-                                    <button class="delete-btn" onclick="deleteImage(<?php echo $row['id']; ?>, '<?php echo $row['filename']; ?>')">
+                                    <button type="button"
+                                            class="delete-btn"
+                                            onclick="deleteImage(event, <?php echo $row['id']; ?>, '<?php echo $row['filename']; ?>')">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>

@@ -136,7 +136,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const confirmDeleteBtn = document.getElementById('confirmDelete');
     const cancelDeleteBtn = document.getElementById('cancelDelete');
     
-    window.deleteImage = function(id, filename) {
+    window.deleteImage = function(event, id, filename) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
         deleteId = id;
         deleteFilename = filename;
         confirmModal.style.display = 'flex';
@@ -161,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             showNotification('Image deleted successfully!', 'success');
                             
                             // Remove the image element from the DOM
-                            const imageElement = document.querySelector(`[onclick="deleteImage(${deleteId}, '${deleteFilename}')"]`);
+                            const imageElement = document.querySelector(`[onclick="deleteImage(event, ${deleteId}, '${deleteFilename}')"]`);
                             if (imageElement) {
                                 const galleryItem = imageElement.closest('.gallery-item');
                                 if (galleryItem) {
