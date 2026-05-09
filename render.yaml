@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: gretchen-gallery
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: STORAGE_ROOT
+        value: /var/www/html/storage
