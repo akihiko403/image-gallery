@@ -84,6 +84,32 @@ function storageRoot() {
     return $root;
 }
 
+function storageUrlRoot() {
+    static $urlRoot = null;
+
+    if ($urlRoot === null) {
+        $configured = envValue('STORAGE_URL_ROOT');
+
+        if ($configured !== null && $configured !== '') {
+            $urlRoot = trim($configured, '/');
+            return $urlRoot;
+        }
+
+        $root = str_replace('\\', '/', storageRoot());
+        $appRoot = str_replace('\\', '/', __DIR__);
+
+        if ($root === $appRoot) {
+            $urlRoot = '';
+        } elseif ($root === $appRoot . '/storage') {
+            $urlRoot = 'storage';
+        } else {
+            $urlRoot = '';
+        }
+    }
+
+    return $urlRoot;
+}
+
 function storagePath($directory, $filename = '') {
     $path = storageRoot() . DIRECTORY_SEPARATOR . trim($directory, '/\\');
 
@@ -95,7 +121,15 @@ function storagePath($directory, $filename = '') {
 }
 
 function publicAssetPath($directory, $filename = '') {
-    $path = trim($directory, '/');
+    $parts = [];
+    $urlRoot = storageUrlRoot();
+
+    if ($urlRoot !== '') {
+        $parts[] = $urlRoot;
+    }
+
+    $parts[] = trim($directory, '/');
+    $path = implode('/', array_filter($parts, fn ($part) => $part !== ''));
 
     if ($filename !== '') {
         $path .= '/' . rawurlencode($filename);

@@ -144,8 +144,8 @@ $total_views = (int) $conn->query("SELECT COALESCE(SUM(views), 0) AS total_views
                     <?php foreach ($result as $row): 
                         $image_path = storagePath('images', $row['filename']);
                         $thumb_path = storagePath('thumbs', $row['filename']);
-                        $image_url = publicAssetPath('storage/images', $row['filename']);
-                        $thumb_url = publicAssetPath('storage/thumbs', $row['filename']);
+                        $image_url = publicAssetPath('images', $row['filename']);
+                        $thumb_url = publicAssetPath('thumbs', $row['filename']);
                         
                         // Create thumbnail if it doesn't exist
                         if (!file_exists($thumb_path) && file_exists($image_path)) {
