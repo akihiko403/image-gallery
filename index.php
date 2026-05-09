@@ -250,6 +250,11 @@ function createThumbnail($source, $destination, $width, $height) {
     
     $src_w = imagesx($image);
     $src_h = imagesy($image);
+
+    if ($src_w <= 0 || $src_h <= 0) {
+        imagedestroy($image);
+        return false;
+    }
     
     // Calculate aspect ratio
     $src_ratio = $src_w / $src_h;
@@ -262,9 +267,11 @@ function createThumbnail($source, $destination, $width, $height) {
         $dst_w = $width;
         $dst_h = $width / $src_ratio;
     }
-    
-    $dst_x = ($width - $dst_w) / 2;
-    $dst_y = ($height - $dst_h) / 2;
+
+    $dst_w = max(1, (int) round($dst_w));
+    $dst_h = max(1, (int) round($dst_h));
+    $dst_x = (int) round(($width - $dst_w) / 2);
+    $dst_y = (int) round(($height - $dst_h) / 2);
     
     $thumbnail = imagecreatetruecolor($width, $height);
     
